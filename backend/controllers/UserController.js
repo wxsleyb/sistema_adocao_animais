@@ -126,7 +126,11 @@ module.exports = class UserController {
         const token = getToken(req)
         const user = await getUserByToken(token)
 
-        const {name, email, phone, password, confirmpassword} = req.body
+        const name = req.body.name
+        const email = req.body.email
+        const phone = req.body.phone
+        const password = req.body.password
+        const confirmpassword = req.body.confirmpassword
 
 
         if(req.file){
@@ -139,6 +143,7 @@ module.exports = class UserController {
          if (!name) {
             return res.status(422).json({ message: 'O nome é obrigatório' });
         }
+        user.name = name
         if (!email) {
             return res.status(422).json({ message: 'O email é obrigatório' });
         }
@@ -170,13 +175,14 @@ module.exports = class UserController {
         }
 
         try {
-            const updateduser = await User.findOneAndUpdate(
+            const updatedUser = await User.findOneAndUpdate(
                 {_id: user._id},
                 {$set: user},
                 {new: true},
             )
             res.status(200).json({
-                message: 'Usuário atualizado com sucesso!'
+                message: 'Usuário atualizado com sucesso!',
+                data: updatedUser,
             })
         } catch (err) {
             res.status(500).json({message: err})
