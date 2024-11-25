@@ -9,6 +9,7 @@
 .navbar_logo {
     display: flex;
     align-items: center;
+    font-weight: bold;
 }
 
 .navbar_logo img {
@@ -40,4 +41,8 @@
 
 .navbar li:hover > a{
     color: #fff;
+}
+
+.navbar p {
+    font-weight: bold;
 }
