@@ -10,6 +10,8 @@ const getUserByToken = require('../helpers/get-user-by-token');
 module.exports = class UserController {
     static async register(req, res) {
         const { name, email, phone, password, confirmpassword } = req.body;
+        const phoneRegex = /^\(\d{2,3}\) \d{8,9}$/;
+
 
         // Validação dos campos
         if (!name) {
@@ -20,6 +22,10 @@ module.exports = class UserController {
         }
         if (!phone) {
             return res.status(422).json({ message: 'O telefone é obrigatório' });
+        }
+        
+        if (!phoneRegex.test(phone)) {
+            return res.status(422).json({ message: 'Formato de telefone inválido! Use o formato (XX) XXXXXXXXX ou (XXX) XXXXXXXXX.' });
         }
         if (!password) {
             return res.status(422).json({ message: 'A senha é obrigatória' });
@@ -131,6 +137,8 @@ module.exports = class UserController {
         const phone = req.body.phone
         const password = req.body.password
         const confirmpassword = req.body.confirmpassword
+        const phoneRegex = /^\(\d{2,3}\) \d{8,9}$/;
+
 
 
         if(req.file){
@@ -161,7 +169,11 @@ module.exports = class UserController {
         if (!phone) {
             return res.status(422).json({ message: 'O telefone é obrigatório' });
         }
-
+        
+        if (!phoneRegex.test(phone)) {
+            return res.status(422).json({ message: 'Formato de telefone inválido! Use o formato (XX) XXXXXXXXX ou (XXX) XXXXXXXXX.' });
+        }
+        
         user.phone = phone
 
         if (password !== confirmpassword) {
