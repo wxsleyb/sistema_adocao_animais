@@ -33,9 +33,12 @@ function AddPet() {
             }
         })
 
-        const data = await api.post('pets/create', formData, {
+        const data = await api.post(`pets/create`, formData, {
+            headers: {
+
             Authorization: `Bearer ${JSON.parse(token)}`,
             'Content-Type': 'multipart/form-data',
+            }
         })
         .then((response) =>{
             return response.data
@@ -58,7 +61,6 @@ function AddPet() {
                 <h1>Cadastre um Pet</h1>
                 <p>Depois ele ficará disponível para adoção</p>
             </div>
-            <p>Formulário</p>
             <PetForm handleSubmit={registerPet} btnText="Cadastrar Pet"/>
         </section>
 
