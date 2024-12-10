@@ -82,3 +82,25 @@
     color: #fff;
     border-color: #25b456;
 }
+
+
+/* minhas adoções */
+
+.contacts {
+    margin-left: 2em;
+}
+
+.contacts p {
+    margin-bottom: 0.5em;
+}
+
+
+.status_adoption_success {
+    font-weight: bold;
+    color: #25b456;
+}
+
+.status_adoption_in_process {
+    font-weight: bold;
+    color: #ffae00;
+}
