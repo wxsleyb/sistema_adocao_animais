@@ -14,16 +14,23 @@ function Navbar() {
 
     return (
         <nav className={styles.navbar}>
-            <div className={styles.navbar_logo}>
-                <img src={Logo} alt="Get A Pet" />
-                Get A Pet
-            </div>
+            <Link to="/">
+
+                <div className={styles.navbar_logo}>
+                    <img src={Logo} alt="Get A Pet" />
+                    ADOPET
+                </div>
+            </Link>
+
             <ul>
                 <li>
                     <Link to="/">Adotar</Link>
                 </li>
                 {authenticated ? (
                     <>
+                        <li>
+                            <Link to="/pet/myadoptions">Minhas Adoções</Link>
+                        </li>
                         <li>
                             <Link to="/pet/mypets">Meus Pets</Link>
                         </li>
