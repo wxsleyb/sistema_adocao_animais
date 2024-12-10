@@ -33,6 +33,8 @@ function MyPets() {
                 Authorization: `Bearer ${JSON.parse(token)}`
             }
         }).then((response) =>{
+            const updatedPets = pets.filter((pet) => pet._id !== id)
+            setPets(updatedPets)
             return response.data
         }).catch((err) =>{
             msgType= 'error'
@@ -42,6 +44,26 @@ function MyPets() {
         setFlashMessage(data.message, msgType)
         
     }
+
+    async function concludeAdoptions(id){
+        let msgType= 'success'
+    
+        const formData = new FormData()
+
+        const data = await api.patch(`/pets/conclude/${id}`, formData, {
+            headers:{
+                Authorization: `Bearer ${JSON.parse(token)}`
+            },
+        }).then((response) => {
+            return response.data
+        }).catch((err) =>{
+            return err.response.data
+        })
+        
+
+        setFlashMessage(data.message, msgType)
+    }
+
     return (
         <section >
             <div className={styles.petlist_header}>
@@ -63,12 +85,16 @@ function MyPets() {
                                 (
                                     <>
                                     {pet.adopter && (
-                                        <button className={styles.conclude_btn}>Concluir adoção</button>
+                                        <button className={styles.conclude_btn} onClick={() =>{
+                                            concludeAdoptions(pet._id)
+                                        }}>Concluir adoção</button>
                                     )}
                                     <Link to={`/pet/edit/${pet._id}`}>Editar</Link>
-                                    <button>Excluir</button>
+                                    <button onClick={() => {
+                                        removePet(pet._id)
+                                    }}>Excluir</button>
                                     </>
-                                ) : <p>Pet já adotado</p>}
+                                ) : <p className={styles.status_adoption_success}>Pet já adotado!</p>}
                             </div>
                         </div>
                     ))
